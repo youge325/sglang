@@ -11,6 +11,28 @@ help:
 	@echo ""
 	@echo "Additional targets:"
 	@echo "  serve       to build and serve documentation with auto-build and live reload"
+	@echo "  html-en     to build English documentation"
+	@echo "  html-zh     to build Chinese documentation"
+	@echo "  html-all    to build both English and Chinese documentation"
+
+# Build English documentation
+html-en:
+	@echo "Building English documentation..."
+	@$(SPHINXBUILD) -b html "$(SOURCEDIR)" "$(BUILDDIR)/html/en" $(SPHINXOPTS)
+	@echo "English documentation built at $(BUILDDIR)/html/en/"
+
+# Build Chinese documentation
+html-zh:
+	@echo "Building Chinese documentation..."
+	@$(SPHINXBUILD) -b html "$(SOURCEDIR)/zh_CN" "$(BUILDDIR)/html/zh_CN" $(SPHINXOPTS)
+	@echo "Chinese documentation built at $(BUILDDIR)/html/zh_CN/"
+
+# Build both English and Chinese documentation with a root redirect page
+html-all: html-en html-zh
+	@echo '<!DOCTYPE html><html><head><meta http-equiv="refresh" content="0;url=en/index.html"><script>window.location.href="en/index.html";</script></head><body><p>Redirecting to <a href="en/index.html">English documentation</a>...</p></body></html>' > "$(BUILDDIR)/html/index.html"
+	@echo "Multi-language documentation built at $(BUILDDIR)/html/"
+	@echo "  English: $(BUILDDIR)/html/en/"
+	@echo "  Chinese: $(BUILDDIR)/html/zh_CN/"
 
 # Compile Notebook files and record execution time
 compile:
@@ -87,7 +109,7 @@ serve:
 		--watch $(SOURCEDIR) \
 		--re-ignore ".*\.(ipynb_checkpoints|pyc|pyo|pyd|git)"
 
-.PHONY: help Makefile compile clean serve
+.PHONY: help Makefile compile clean serve html-en html-zh html-all
 
 %: Makefile
 	@$(SPHINXBUILD) -M $@ "$(SOURCEDIR)" "$(BUILDDIR)" $(SPHINXOPTS) $(O)

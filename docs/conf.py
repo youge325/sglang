@@ -2,9 +2,13 @@ import os
 import sys
 from datetime import datetime
 
-sys.path.insert(0, os.path.abspath("../.."))
+# Use __file__ to resolve paths, so this works when imported from subdirs (e.g. zh_CN/)
+_conf_dir = os.path.dirname(os.path.abspath(__file__))
+_repo_root = os.path.dirname(_conf_dir)
 
-version_file = "../python/sglang/version.py"
+sys.path.insert(0, _repo_root)
+
+version_file = os.path.join(_repo_root, "python", "sglang", "version.py")
 with open(version_file, "r") as f:
     exec(compile(f.read(), version_file, "exec"))
 __version__ = locals()["__version__"]
@@ -95,7 +99,7 @@ master_doc = "index"
 
 language = "en"
 
-exclude_patterns = ["_build", "Thumbs.db", ".DS_Store"]
+exclude_patterns = ["_build", "Thumbs.db", ".DS_Store", "zh_CN"]
 
 pygments_style = "sphinx"
 
@@ -119,6 +123,10 @@ html_theme_options = {
     "use_download_button": True,
     "use_sidenotes": True,
     "show_toc_level": 2,
+    "announcement": (
+        '🌐 <strong>English</strong> | '
+        '<a href="../zh_CN/index.html">中文</a>'
+    ),
 }
 
 html_context = {
@@ -131,10 +139,12 @@ html_context = {
 
 html_static_path = ["_static"]
 html_css_files = ["css/custom_log.css"]
+html_js_files = ["js/lang_switcher.js"]
 
 
 def setup(app):
     app.add_css_file("css/custom_log.css")
+    app.add_js_file("js/lang_switcher.js")
 
 
 myst_enable_extensions = [
