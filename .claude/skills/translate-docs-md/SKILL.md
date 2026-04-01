@@ -1,5 +1,5 @@
 ---
-name: translate-docs
+name: translate-docs-md
 description: "Translate technical documentation from English to Chinese (Markdown/RST/Jupyter). Use when asked to localize docs, finish remaining untranslated files, sync zh_CN structure, update toctree links, and verify Sphinx build output."
 argument-hint: "Provide source and target doc roots, e.g. docs -> docs/zh_CN"
 ---
