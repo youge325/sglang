@@ -139,8 +139,10 @@ html_context = {
 
 html_static_path = ["_static"]
 html_css_files = ["css/custom_log.css"]
-html_js_files = ["js/deprecation_banner.js"]
-html_js_files = ["js/lang_switcher.js"]
+html_js_files = [
+    "js/deprecation_banner.js",
+    "js/lang_switcher.js"
+]
 
 
 def setup(app):
